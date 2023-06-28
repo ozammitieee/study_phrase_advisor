@@ -1,1 +1,1 @@
-# study_phrase_advisor
+# Study Phrase Advisor - Google Chrome Plugin
