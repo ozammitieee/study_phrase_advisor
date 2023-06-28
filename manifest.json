@@ -1,0 +1,24 @@
+{
+  "name": "Study Phrase Advisor",
+  "manifest_version": 2,
+  "version": "1.0",
+  "permissions": [
+    "<all_urls>", "webRequest", "tabs", "activeTab" ],
+  "background": {
+    "scripts": ["js/jquery-3.4.1.min.js", "js/common.js", "js/background.js"],
+    "persistent": true
+  },
+  "icons":{"16": "images/edu.png"},
+  "browser_action" : {},
+  "content_scripts": [
+    {
+      "matches": [ "*://*/*" ],
+        "include_globs": [
+            "*://*.google.*/search*",
+            "*://*.google.*/scholar*"
+        ],
+      "js": ["js/gethtmlcode.js"]
+    }
+  ]
+}
+

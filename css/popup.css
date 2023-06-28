@@ -1,0 +1,179 @@
+/* Set height of body and the document to 100% to enable "full page tabs" */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+  font-size: medium;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+/* Style tab links */
+.notification {
+  background-color:yellow;
+  color: red;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+
+
+.tablink:hover {
+  background-color: #777;
+  color: black;
+}
+
+.navigation{
+  clear: both;
+  padding: 10px;
+}
+
+.tabcontent{
+  clear: both;
+  padding: 10px;
+  height: 620px;
+}
+
+.tabcontent h1{
+  font-size: 20pt;
+  color: grey;
+}
+
+.tabcontent h2{
+  font-size: 15pt;
+  color: grey;
+}
+
+
+.tabcontent .line {
+	border-bottom: 5px solid transparent;
+	border-image: linear-gradient(to right, #080114 0%, #4ea2f5 100%);
+	border-image-slice: 1;
+}
+
+.tabcontent p{
+  padding: 5px;
+  font-style: italic;
+}
+
+.input_control{
+  width:60%;
+}
+
+
+
+.centre{
+  display: flex;
+  justify-content: center;
+}
+
+.info-msg,
+.success-msg,
+.warning-msg,
+.error-msg {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 3px 3px 3px 3px;
+}
+.info-msg {
+  background-color:lightgray;
+  color: black;
+}
+.success-msg {
+  color: #270;
+  background-color: #DFF2BF;
+}
+.warning-msg {
+  color: #9F6000;
+  background-color: #FEEFB3;
+}
+.error-msg {
+  color: #D8000C;
+  background-color: #FFBABA;
+}
+
+
+.styled-table {
+  border-collapse: collapse;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+  background-color: #555;
+  color: #ffffff;
+  text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 15px;
+}
+
+.styled-table td:hover {
+    background-color: rgb(172, 200, 160);
+    color: black;
+}
+
+.styled-table a {
+  color: black;
+}
+
+.styled-table a:hover {
+  color: white;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.numberCircle {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+
+  background: #fff;
+  border: 2px solid #666;
+  color: #666;
+  text-align: center;
+
+  font: 18px Arial, sans-serif;
+}
+
+.icon{
+  height:25px;
+  margin-right: 10px;
+}
+
+
+input[type="button"] {
+  background-color: #009879;
+  color: white;
+  border-radius: 0px;
+  padding: 5px;
+}
+
+

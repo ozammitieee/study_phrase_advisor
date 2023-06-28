@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Study Phrase Advisor</title>
+  <!-- CSS files -->
+  <link rel="stylesheet" type="text/css" href="css/popup.css">
+  <!-- Script files -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/popup.js"></script>
+</head>
+
+<body>
+
+  <div id='not_connected'>
+    <div class="tabcontent">
+      <h1>Connecting to server</h1>
+      <div class="line"></div>
+      <p>
+        Please wait while the plugin connects to the server.
+        If the plugin takes time to connect it means that the
+        server might be switched off. The server is usually switched on between 8:00 AM and 5:00 PM during
+        weekdays.
+      </p>
+      <p>If you have any queries send an email to <a href="mailto:ozammit@ieee.org">ozammit@ieee.org</a>.</p>
+    </div>
+  </div>
+
+  <div id='connected' hidden>
+    <div class="navigation">
+      <!-- Navigation buttons -->
+      <button id="btn_registration" class="tablink">Registration</button>
+      <button id="btn_activity" class="tablink">Activity</button>
+      <button id="btn_suggestions" class="tablink">Suggestions</button>
+      <button id="btn_notifications" class="tablink">Notifications</button>
+      <button id="btn_logout" class="tablink">Logout</button>
+    </div>
+
+    <div style=" clear: both; margin: 10px" class="info-msg">
+      <i>Connected as: <i id="i_connectedas">NOT CONNECTED</i> </i>
+    <br/>
+      <i>Currernt status: <i id="i_status" style="color: green;">Getting data from server</i> </i>
+    </div>
+
+    <!-- Registration tab contents -->
+    <div id="div_registration" class="tabcontent">
+      <h1>Registration</h1>
+      <div class="line"></div>
+
+      <!-- Existing registration -->
+      <h2 style="margin-top: 60px;">Existing Registration</h2>
+      <p>
+        If you have a registration ID, enter the ID below and click <b>Connect</b>. If you want to clear the
+        registration from this computer, click Logout, but ensure that you have a copy of your registration ID.
+      </p>
+      <div class="centre">
+        <input type="text" class="input_control" id="inp_registration_code" />
+        <button id="btn_connect">Connect</button>
+      </div>
+
+      <!-- New registration -->
+      <h2 style="margin-top: 80px;">New Registration</h2>
+      <p>
+        To register, select a study group code from the list below and click <b>Create</b>.
+        Once a new registration code is created, take note of it since this is the only identification
+        number within the system.
+      </p>
+      <div class="centre">
+        <select class="input_control" id="sel_study_groups">
+        </select>
+        <button id="btn_new_registration">Create</button>
+      </div>
+      <p class="info-msg">
+        <span id="p_study_group_description"></span>
+      </p>
+
+    </div>
+
+    <!-- Suggestions contents -->
+    <div id="div_suggestions" class="tabcontent">
+      <h1><img src="images/suggestions.png" class="icon"></img>Suggestions</h1>
+      <div class="line"></div>
+
+      <h2>Similar Keyphrases</h2>
+
+      <table class="styled-table" style="margin-top: 10px;">
+        <thead>
+          <tr>
+            <td colspan="2" id="td_similar_keyphrases"></td>
+          </tr>
+        </thead>
+        <tbody id="tbody_similar_keyphrases">
+          <tr>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Similar Study Group Keyphrases</h2>
+
+      <table class="styled-table" style="margin-top: 10px;">
+        <thead>
+          <tr>
+            <td colspan="2" id="td_similar_study_group_keyphrases"></td>
+          </tr>
+        </thead>
+        <tbody id="tbody_similar_study_group_keyphrases">
+          <tr>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Activity contents -->
+    <div id="div_activity" class="tabcontent">
+      <h1><img src="images/activity.png" class="icon"></img>Activity</h1>
+      <div class="line"></div>
+
+      <h2>Last Searched Keyphrases</h2>
+
+      <table class="styled-table" style="margin-top: 10px;">
+        <thead>
+          <tr>
+            <td colspan="2" id="td_lastsearch_call"></td>
+          </tr>
+        </thead>
+        <tbody id="tbody_lastsearches">
+          <tr>
+          </tr>
+        </tbody>
+       
+      </table>
+
+      <h2>Auto-Generated Keyphrases</h2>
+      <table class="styled-table" style="margin-top: 10px;">
+        <thead>
+          <tr>
+            <td colspan="2" id="td_lastsearched"></td>
+          </tr>
+        </thead>
+        <tbody id="tbody_extracted_keyphrases">
+          <tr>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Notification contents -->
+    <div id="div_notifications" class="tabcontent">
+      <h1><img src="images/message.png" class="icon"></img>Notifications</h1>
+      <div class="line"></div>
+      
+      <table class="styled-table" style="margin-top: 10px;">
+        <thead>
+        </thead>
+        <tbody id="tbody_notifications">
+        </tbody>
+      </table>
+    </div>
+
+
+    <div>
+      <div class="success-msg" id="div_success" hidden>
+        <i id="i_success">ddd</i>
+      </div>
+      <div class="error-msg" id="div_error" hidden>
+        <i id="i_error"></i>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+
+</html>
