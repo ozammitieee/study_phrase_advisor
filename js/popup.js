@@ -50,7 +50,7 @@ function heartbeat_callback(response){
             $("#sel_study_groups").change(function () { updateDescription(); });
 
             /* Create new registration button */
-            $("#btn_new_registration").click(function () { register(register_callback, $("#sel_study_groups").val()); });
+            $("#btn_new_registration").click(function () { register(register_callback, $("#sel_study_groups").val(), $("#inp_user_name").val()); });
 
             /* Connect with registration code */
             $("#btn_connect").click(function () { connect_login(connect_login_callback, $("#inp_registration_code").val()); });

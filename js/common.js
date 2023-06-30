@@ -117,8 +117,8 @@ function get_push_notifications(callback) {
 }
 
 /* Create registraton API */
-function register(callback, study_group) {
-    $.post(API_URL + "register.php", { 'study_group': study_group },
+function register(callback, study_group, user_name) {
+    $.post(API_URL + "register.php", { 'study_group': study_group, 'user_name': user_name},
         function (response) {
             callback(response);
         }

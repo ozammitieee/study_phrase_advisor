@@ -76,10 +76,9 @@ body, html {
   width:60%;
 }
 
-
-
 .centre{
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -107,7 +106,6 @@ body, html {
   color: #D8000C;
   background-color: #FFBABA;
 }
-
 
 .styled-table {
   border-collapse: collapse;

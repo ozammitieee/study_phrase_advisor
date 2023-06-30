@@ -67,9 +67,30 @@
         number within the system.
       </p>
       <div class="centre">
-        <select class="input_control" id="sel_study_groups">
-        </select>
-        <button id="btn_new_registration">Create</button>
+          <table width="100%">
+            <tr >
+              <td width="20%">
+                <label for="inp_user_name">User name:</label>
+              </td>
+              <td>
+                <input type="text" class="input_control" id="inp_user_name" placeholder="Optional"/>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="sel_study_groups">Study Group:</label>
+              </td>
+              <td>
+                <select class="input_control" id="sel_study_groups"> </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button id="btn_new_registration">Create</button>
+              </td>
+            </tr>
+
+          </table>
       </div>
       <p class="info-msg">
         <span id="p_study_group_description"></span>
@@ -113,7 +134,7 @@
 
     <!-- Activity contents -->
     <div id="div_activity" class="tabcontent">
-      <h1><img src="images/activity.png" class="icon"></img>Activity</h1>
+      <h1><img src="images/activity.png" class="icon"/>Activity</h1>
       <div class="line"></div>
 
       <h2>Last Searched Keyphrases</h2>
@@ -147,7 +168,7 @@
 
     <!-- Notification contents -->
     <div id="div_notifications" class="tabcontent">
-      <h1><img src="images/message.png" class="icon"></img>Notifications</h1>
+      <h1><img src="images/message.png" class="icon"/>Notifications</h1>
       <div class="line"></div>
       
       <table class="styled-table" style="margin-top: 10px;">
