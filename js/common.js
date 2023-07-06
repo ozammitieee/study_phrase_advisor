@@ -11,7 +11,8 @@ const callbacks = {
     SIMILAR_KEYPHRASES: "PLUGIN_SIMILAR_KEYPHRASES",
     SIMILAR_STUDY_GROUP_KEYPHRASES: "SIMILAR_STUDY_GROUP_KEYPHRASES",
     SIMILAR_LINKED_KEYPHRASES: "PLUGIN_SIMILAR_LINKED_KEYPHRASES",
-    LECTURER_SUGGESTED_KEYPHRASE: "LECTURER_SUGGESTED_KEYPHRASE"
+    LECTURER_SUGGESTED_KEYPHRASE: "LECTURER_SUGGESTED_KEYPHRASE",
+    SUGGESTED_RESOURCES: "SUGGESTED_RESOURCES"
 }
 
 /* Method used to create a search URL with a call back in Google */
@@ -20,6 +21,10 @@ function google_search_url(call_back_source, call_back_function, keyphrase) {
         return "https://www.google.com/search?cbs=" + call_back_source + "&cbf=" + call_back_function + "&q=" + keyphrase;
     else
         return "https://www.google.com/search?cbf=" + call_back_function + "&q=" + keyphrase;
+}
+
+function google_scholar_url(call_back_source, call_back_function, keyphrase) {
+    return "https://scholar.google.com/scholar?hl=en&cbs=" + call_back_source + "&cbf=" + call_back_function + "&q=" + keyphrase;
 }
 
 /* Clear cache storage */

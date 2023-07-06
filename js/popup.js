@@ -30,6 +30,7 @@ function heartbeat_callback(response){
         $("#btn_registration").click(function () { toggle_tabs("#div_registration"); });
         $("#btn_suggestions").click(function () { toggle_tabs("#div_suggestions"); });
         $("#btn_activity").click(function () { toggle_tabs("#div_activity"); });
+        $("#btn_resources").click(function () { toggle_tabs("#div_resources"); });
         $("#btn_notifications").click(function () { toggle_tabs("#div_notifications"); });
         $("#btn_logout").click(function () { logout(logout_callback); });
         $("#btn_refresh").click(function () { refresh(refresh_callback); });
@@ -43,6 +44,7 @@ function heartbeat_callback(response){
             $("#btn_suggestions").hide();
             $("#btn_activity").hide();
             $("#btn_notifications").hide();
+            $("#btn_resources").hide();
             $("#btn_registration").show();
 
             /* Populate the study group drop down list */
@@ -165,6 +167,7 @@ function defaults(display_text = "Loading...", startup = false) {
     $("#td_similar_keyphrases").text(display_text);
     $("#td_similar_linked_keyphrases").text(display_text);
     $("#td_similar_study_group_keyphrases").text(display_text);
+    $("#td_resources").text(display_text);
 }
 
 
@@ -226,7 +229,6 @@ function display_similar_study_group_keyphrases(data) {
 /* Get similar keyphrases callback*/
 function display_similarity_result(data) {
 
-
     $("#td_similar_keyphrases").text("Keyphrase: " + data.last_keyphrase_searched);
     data.result_data.forEach(element => {
 
@@ -245,6 +247,39 @@ function display_similarity_result(data) {
         });
     });
 
+}
+
+function display_suggested_resources(data){
+    // OMAR TODO HERE
+    $("#td_resources").text("Keyphrase: " + data.last_keyphrase_searched);
+
+    data.result_data.forEach(element => {
+        debug_print(element);
+
+        // Split keywords
+        keywords = "";
+        d_weight = 1;
+        element['keywords'].split(";").forEach( keyword =>{
+            var url = google_search_url(data.last_visited_url_id, callbacks.SUGGESTED_RESOURCES, keyword);
+            keywords += "<li><a data-weight='"+ d_weight +"' target='_blank' href='" + url + "'>" + keyword + "</a></li>";
+            if(d_weight == 1)
+                d_weight = 2;
+            else
+                d_weight = 1;
+        });
+
+        // Title url
+        var title = google_scholar_url(data.last_visited_url_id, callbacks.SUGGESTED_RESOURCES, element['title'] );
+        title = "<a target='_blank' href='" + title + "'>" + element['title'] + "</a>";
+
+         $('#tbody_resources').append(
+            "<tr><td style='vertical-align:top;'>" + get_star_image(element['sim'] * 100) + "</td><td>" +
+            "<p class='resource_title'>" + title + "</p>" +
+            "<p class='resource_author'>" + element['author'] + "</p>" +
+            "<ul class='cloud' role='navigation' aria-label='Webdev tag cloud'>" + keywords+ "</ul>" +
+            "</td></tr>"
+         );
+    });
 }
 
 function computed_results_callback(response) {
@@ -268,6 +303,7 @@ function computed_results_callback(response) {
     $("#tbody_similar_keyphrases").empty();
     $("#tbody_similar_study_group_keyphrases").empty();
     $("#tbody_extracted_keyphrases").empty();
+    $("#tbody_resources").empty();
 
     /* Get last search hash */
     var last_search = response.data.find(e => e.result_type == "LAST_SEARCHES");
@@ -306,6 +342,13 @@ function computed_results_callback(response) {
                     display_similarity_result(result);
                 }    
                 break;
+            case "SUGGESTED_RESOURCES":
+                total_results ++;
+                if(result.result_hash == last_search_hash){
+                    updated_results ++;
+                    display_suggested_resources(result);
+                }
+                break;
             default:
                 debug_print(result);
         }
@@ -331,6 +374,7 @@ function connected() {
     $("#btn_logout").show();
     $("#btn_suggestions").show();
     $("#btn_activity").show();
+    $("#btn_resources").show();
     $("#btn_notifications").show();
     $("#btn_registration").hide();
 
@@ -411,8 +455,8 @@ function read_notification_callback(response){
 /* Get the star image */
 function get_star_image(percentage) {
     var image = "";
-    if (percentage <= 33) { image = "empty"; }
-    else if (percentage <= 66) { image = "half"; }
+    if (percentage <= 30) { image = "empty"; }
+    else if (percentage <= 60) { image = "half"; }
     else { image = "full"; }
     return "<img src='images/" + image + "_star.png' width='40px'/>"
 }

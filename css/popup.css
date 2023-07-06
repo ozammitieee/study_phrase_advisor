@@ -16,7 +16,7 @@ body, html {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 25%;
+  width: 20%;
 }
 
 /* Style tab links */
@@ -29,7 +29,7 @@ body, html {
   cursor: pointer;
   padding: 14px 16px;
   font-size: 17px;
-  width: 25%;
+  width: 20%;
 }
 
 
@@ -136,7 +136,7 @@ body, html {
 }
 
 .styled-table a:hover {
-  color: white;
+  color: blue;
 }
 
 .styled-table tbody tr {
@@ -174,4 +174,53 @@ input[type="button"] {
   padding: 5px;
 }
 
+.resource_title{
+      padding: 0px;
+      margin: 0px;
+      text-align: left;
+      color: white;
+      font-size: 18px;
+      font-weight:bold;
+}
 
+.resource_title a{
+    text-decoration: none;
+}
+
+.resource_author{
+    text-align:left;
+    font-style: italic;
+}
+
+ul{
+ border-radius: 25px;
+  border: 2px solid #73AD21;
+  padding: 20px;
+}
+
+ul.cloud {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  line-height: 2.5rem;
+}
+
+ul.cloud a {
+  color: #a33;
+  display: block;
+  font-size: 1rem;
+  padding: 0.125rem 0.25rem;
+  text-decoration: none;
+  position: relative;
+}
+
+ul.cloud a[data-weight="1"] { --size: black; }
+ul.cloud a[data-weight="2"] { --size: #a33; }
+
+ul.cloud a {
+  --size: attr(data-weight string);
+  color: var(--size);
+}
