@@ -6,7 +6,6 @@ chrome.browserAction.onClicked.addListener(function (activeTab) {
   });
 });
 
-
 // Dictionary to store the content type of visited URL
 var tabToMimeType = {};
 
@@ -85,6 +84,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     "content_type": content_type,
     "content": content // The HTML content.
   };
+
+    console.log(json);
 
   // Send request to the server
   $.post(API_URL + "user/visited_url.php", JSON.stringify(json));

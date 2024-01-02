@@ -164,6 +164,7 @@ function defaults(display_text = "Loading...", startup = false) {
     }
 
     $("#td_lastsearched").text(display_text);
+    $("#td_next_best_action").text(display_text);
     $("#td_similar_keyphrases").text(display_text);
     $("#td_similar_linked_keyphrases").text(display_text);
     $("#td_similar_study_group_keyphrases").text(display_text);
@@ -234,7 +235,6 @@ function display_similarity_result(data) {
 
     /* Determine weight */
     var weight = element['sim'] * 100;
-    debug_print(weight)
 
         element['searched_keyphrases'].forEach(search => {
             /* Create a URL with a callback */
@@ -249,12 +249,25 @@ function display_similarity_result(data) {
 
 }
 
+function display_next_best_action(data){
+debug_print(data);
+    $("#td_next_best_action").text("Keyphrase: " + data.last_keyphrase_searched);
+    data.result_data.forEach(element => {
+
+        var url = google_search_url(data.last_visited_url_id, callbacks.NEXT_BEST_ACTION, element['text']);
+        url = "<a target='_blank' href='" + url + "'>" + element['text'] + "</a>";
+
+        $('#tbody_next_best_action').append("<tr>" +
+            "<td width='5%'>" + get_star_image(element['probability']) + "</td>" +
+            "<td>" + url + "</td></tr>");
+    });
+}
+
+
 function display_suggested_resources(data){
-    // OMAR TODO HERE
     $("#td_resources").text("Keyphrase: " + data.last_keyphrase_searched);
 
     data.result_data.forEach(element => {
-        debug_print(element);
 
         // Split keywords
         keywords = "";
@@ -300,6 +313,7 @@ function computed_results_callback(response) {
     
     /* Clear all results */
     $("#tbody_lastsearches").empty();
+    $("#tbody_next_best_action").empty();
     $("#tbody_similar_keyphrases").empty();
     $("#tbody_similar_study_group_keyphrases").empty();
     $("#tbody_extracted_keyphrases").empty();
@@ -349,13 +363,20 @@ function computed_results_callback(response) {
                     display_suggested_resources(result);
                 }
                 break;
+            case "NEXT_BEST_ACTION":
+                total_results ++;
+                if(result.result_hash == last_search_hash){
+                    updated_results ++;
+                    display_next_best_action(result);
+                }
+                break;
             default:
                 debug_print(result);
         }
     });
 
     if(last_search_domain_is_google){
-        var updated_progress = (updated_results / total_results) * 100;
+        var updated_progress = Math.round((updated_results / total_results) * 100, 2);
 
         if(updated_progress == 100)
             $("#i_status").text("Results are ready to view");
@@ -458,5 +479,6 @@ function get_star_image(percentage) {
     if (percentage <= 30) { image = "empty"; }
     else if (percentage <= 60) { image = "half"; }
     else { image = "full"; }
+    //return Math.round(percentage) + "%";
     return "<img src='images/" + image + "_star.png' width='40px'/>"
 }
