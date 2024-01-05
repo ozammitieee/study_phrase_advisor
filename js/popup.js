@@ -250,16 +250,29 @@ function display_similarity_result(data) {
 }
 
 function display_next_best_action(data){
-debug_print(data);
     $("#td_next_best_action").text("Keyphrase: " + data.last_keyphrase_searched);
     data.result_data.forEach(element => {
 
-        var url = google_search_url(data.last_visited_url_id, callbacks.NEXT_BEST_ACTION, element['text']);
-        url = "<a target='_blank' href='" + url + "'>" + element['text'] + "</a>";
+        var url = "";
 
-        $('#tbody_next_best_action').append("<tr>" +
-            "<td width='5%'>" + get_star_image(element['probability']) + "</td>" +
-            "<td>" + url + "</td></tr>");
+        if(element['searched_keyphrases'].length > 0){
+            element['searched_keyphrases'].forEach(keyword=>{
+                var url = google_search_url(data.last_visited_url_id, callbacks.NEXT_BEST_ACTION, keyword);
+                url = "<a target='_blank' href='" + url + "'><b>" + keyword+ "</b></a>";
+                $('#tbody_next_best_action').append("<tr>" +
+                    "<td width='5%'>" + get_star_image(element['probability']) + "</td>" +
+                    "<td> " + url + " </td></tr>");
+            })
+
+        }else{
+            var url = element['text'];
+            url = "<a target='_blank' href='" + url + "'>" + url + "</a>";
+            $('#tbody_next_best_action').append("<tr>" +
+                        "<td width='5%'>" + get_star_image(element['probability']) + "</td>" +
+                        "<td>" + url + "</td></tr>");
+        }
+
+
     });
 }
 
