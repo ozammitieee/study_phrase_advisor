@@ -199,7 +199,7 @@ function display_extracted_keyphrases(data) {
         url = "<a target='_blank' href='" + url + "'>" + element.keyphrase + "</a>";
         
         /* Calculate weight */
-        var weight = (100 / data.result_data[0].weight) * element.weight;
+        var weight = Math.round((100 / data.result_data[0].weight) * element.weight, 0);
 
         /* Add row in table */
         $('#tbody_extracted_keyphrases').append("<tr>" +
@@ -234,17 +234,17 @@ function display_similarity_result(data) {
     data.result_data.forEach(element => {
 
     /* Determine weight */
-    var weight = element['sim'] * 100;
+    var weight = Math.round(element['sim'] * 100, 2);
 
-        element['searched_keyphrases'].forEach(search => {
-            /* Create a URL with a callback */
-            var url = google_search_url(data.last_visited_url_id, callbacks.SIMILAR_KEYPHRASES, search);
-            url = "<a target='_blank' href='" + url + "'>" + search + "</a>";
+    element['searched_keyphrases'].forEach(search => {
+        /* Create a URL with a callback */
+        var url = google_search_url(data.last_visited_url_id, callbacks.SIMILAR_KEYPHRASES, search);
+        url = "<a target='_blank' href='" + url + "'>" + search + "</a>";
 
-            $('#tbody_similar_keyphrases').append("<tr>" +
-                "<td width='5%'>" + get_star_image(weight) + "</td>" +
-                "<td>" + url + "</td></tr>");
-        });
+        $('#tbody_similar_keyphrases').append("<tr>" +
+            "<td width='5%'>" + get_star_image(weight) + "</td>" +
+            "<td>" + url + "</td></tr>");
+    });
     });
 
 }
@@ -299,7 +299,7 @@ function display_suggested_resources(data){
         title = "<a target='_blank' href='" + title + "'>" + element['title'] + "</a>";
 
          $('#tbody_resources').append(
-            "<tr><td style='vertical-align:top;'>" + get_star_image(element['sim'] * 100) + "</td><td>" +
+            "<tr><td style='vertical-align:top;'>" + get_star_image(Math.round(element['sim'] * 100, 0)) + "</td><td>" +
             "<p class='resource_title'>" + title + "</p>" +
             "<p class='resource_author'>" + element['author'] + "</p>" +
             "<ul class='cloud' role='navigation' aria-label='Webdev tag cloud'>" + keywords+ "</ul>" +
@@ -341,6 +341,7 @@ function computed_results_callback(response) {
 
     /* Result hashes */
     response.data.forEach(result=>{
+        debug_print(result);
         switch(result.result_type) {
             case "LAST_SEARCHES":
                 last_keyphrase_hash = result.result_hash;
@@ -489,9 +490,9 @@ function read_notification_callback(response){
 /* Get the star image */
 function get_star_image(percentage) {
     var image = "";
-    if (percentage <= 30) { image = "empty"; }
-    else if (percentage <= 60) { image = "half"; }
+    if (percentage <= 20) { image = "empty"; }
+    else if (percentage <= 70) { image = "half"; }
     else { image = "full"; }
     //return Math.round(percentage) + "%";
-    return "<img src='images/" + image + "_star.png' width='40px'/>"
+    return "<img src='images/" + image + "_star.png' width='40px' title='Similarity: " + percentage + "%'/>"
 }
