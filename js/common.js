@@ -1,5 +1,5 @@
 var API_URL = "http://zammit001.ddns.net/eduapi/";
-API_URL = "http://192.168.1.110/eduapi/";
+
 
 var REGISTRATION_DATA = "REGISTRATION_DATA";
 var PAUSE = "PAUSE";
