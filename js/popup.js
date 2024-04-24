@@ -1,3 +1,5 @@
+localStorage.setItem(PAUSE, "false")
+
 var STUDY_GROUP_DICTIONARY = [];
 
 /* Keep a hash for last searches,
@@ -496,3 +498,7 @@ function get_star_image(percentage) {
     //return Math.round(percentage) + "%";
     return "<img src='images/" + image + "_star.png' width='40px' title='Similarity: " + percentage + "%'/>"
 }
+
+window.addEventListener('beforeunload', function() {
+    localStorage.setItem(PAUSE, "true");
+}, false)
