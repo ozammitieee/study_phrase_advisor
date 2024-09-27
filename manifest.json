@@ -1,24 +1,46 @@
 {
   "name": "Study Phrase Advisor",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "version": "1.0",
   "permissions": [
-    "<all_urls>", "webRequest", "tabs", "activeTab" ],
+    "storage",
+    "tabs", 
+    "activeTab", 
+    "webRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "background": {
-    "scripts": ["js/jquery-3.4.1.min.js", "js/common.js", "js/background.js"],
-    "persistent": true
+    "service_worker": "js/background.js"
   },
-  "icons":{"16": "images/edu.png"},
-  "browser_action" : {},
+  "icons": {
+    "16": "images/edu.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/edu.png"
+    }
+  },
   "content_scripts": [
     {
-      "matches": [ "*://*/*" ],
-        "include_globs": [
-            "*://*.google.*/search*",
-            "*://*.google.*/scholar*"
-        ],
-      "js": ["js/gethtmlcode.js"]
+      "matches": ["*://*/*"],
+      "include_globs": [
+        "*://*.google.*/search*",
+        "*://*.google.*/scholar*"
+      ],
+      "js": ["js/gethtmlcode.js", 
+      "js/common.js"
+    ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/jquery-3.4.1.min.js",
+        "js/common.js"
+      ],
+      "matches": ["<all_urls>"]
     }
   ]
 }
-

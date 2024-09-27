@@ -1,5 +1,7 @@
+importScripts("common.js")
+
 /* Open popup window as a seperate window */
-chrome.browserAction.onClicked.addListener(function (activeTab) {
+chrome.action.onClicked.addListener(function (activeTab) {
   chrome.windows.create({
     url: chrome.runtime.getURL("popup.html"), type:
       "popup", height: 800, width: 600
@@ -16,12 +18,6 @@ var htmlContent = {};
     This is mainly used to get the HTML code of the page.*/
 chrome.runtime.onMessage.addListener(
   function (message, callback) {
-    // Read registration code from local storage.
-    var registration_code = get_registration();
-    if (registration_code == null) {
-      // Ignore
-      return;
-    }
     /* Get the HTML content */
     if (message.action == "getContent") {
       htmlContent[message.source] = message.data;
@@ -32,10 +28,9 @@ chrome.runtime.onMessage.addListener(
 );
 
 
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-
+chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
   // Check if data collection is pause.
-  if (localStorage.getItem(PAUSE) == 'true') {
+  if ((await LS.getItem(PAUSE)) == 'true') {
     return
   }
 
@@ -54,7 +49,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   }
 
   // Read registration code from local storage.
-  var registration_code = get_registration();
+  var registration_code = await get_registration();
   if (registration_code == null) {
     // Do not send the request.
     return;
@@ -85,18 +80,24 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     "content": content // The HTML content.
   };
 
-    console.log(json);
+  console.log(json);
 
   // Send request to the server
-  $.post(API_URL + "user/visited_url.php", JSON.stringify(json));
+  fetch(API_URL + "user/visited_url.php", {
+    method: "POST",
+    body: JSON.stringify(json),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  });
 
 });
 
 
-chrome.webRequest.onHeadersReceived.addListener(function (details) {
+chrome.webRequest.onHeadersReceived.addListener(async function (details) {
 
   // Check if data collection is pause.
-  if (localStorage.getItem(PAUSE) == 'true') {
+  if ((await LS.getItem(PAUSE)) == 'true') {
     return
   }
 

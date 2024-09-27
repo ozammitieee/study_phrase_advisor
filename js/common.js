@@ -4,6 +4,14 @@ API_URL = "http://192.168.1.110/eduapi/";
 var REGISTRATION_DATA = "REGISTRATION_DATA";
 var PAUSE = "PAUSE";
 
+const LS = {
+    getAllItems: () => chrome.storage.local.get(),
+    getItem: async key => (await chrome.storage.local.get(key))[key],
+    setItem: (key, val) => chrome.storage.local.set({[key]: val}),
+    removeItems: keys => chrome.storage.local.remove(keys),
+  };
+
+
 /* Enumeration used to keep
     track of call backs */
 const callbacks = {
@@ -11,7 +19,6 @@ const callbacks = {
     EXTRACTED_KEYPHRASES: "PLUGIN_EXTRACTED_KEYPHRASES",
     SIMILAR_KEYPHRASES: "PLUGIN_SIMILAR_KEYPHRASES",
     SIMILAR_STUDY_GROUP_KEYPHRASES: "SIMILAR_STUDY_GROUP_KEYPHRASES",
-    // SIMILAR_LINKED_KEYPHRASES: "PLUGIN_SIMILAR_LINKED_KEYPHRASES",
     LECTURER_SUGGESTED_KEYPHRASE: "LECTURER_SUGGESTED_KEYPHRASE",
     SUGGESTED_RESOURCES: "SUGGESTED_RESOURCES",
     NEXT_BEST_ACTION: "NEXT_BEST_ACTION"
@@ -29,20 +36,16 @@ function google_scholar_url(call_back_source, call_back_function, keyphrase) {
     return "https://scholar.google.com/scholar?hl=en&cbs=" + call_back_source + "&cbf=" + call_back_function + "&q=" + keyphrase;
 }
 
-/* Clear cache storage */
-function clear_registration(){
-    localStorage.clear();
-}
 
 /* Save registration in cache storage */
 function save_registration(data){
-    localStorage.setItem(REGISTRATION_DATA, JSON.stringify(data));
+    LS.setItem(REGISTRATION_DATA, JSON.stringify(data));
 }
 
 /* Get the registration from cache storage */
-function get_registration(){
-    var data = localStorage.getItem(REGISTRATION_DATA);
-    if(data != null){
+async function get_registration(){
+    var data = await LS.getItem(REGISTRATION_DATA);
+    if(data != undefined){
         data = JSON.parse(data);
     }
     return data;

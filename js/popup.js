@@ -1,4 +1,4 @@
-localStorage.setItem(PAUSE, "false")
+LS.setItem(PAUSE, "false")
 
 var STUDY_GROUP_DICTIONARY = [];
 
@@ -11,18 +11,17 @@ var PUSH_NOTIFICATIONS = "";
 
 /* Validate a response, if the response is not good
     it will display the message */
-function validate_response(response, default_error_message) {
+function validate_response(response) {
     if (response == null || !response.success) {
-        display_message(default_error_message, true);
         return false;
     }
     return true;
 }
 
 /* Check if server is alive */
-function heartbeat_callback(response){
+async function heartbeat_callback(response){
     if(!validate_response(response)){
-        alert("The server is not currently listening to connections.\nPlease try again later.");
+        alert("The server is not currently listening for connections.\nPlease try again later.");
         window.close();
     }else{
         $('#not_connected').hide();
@@ -38,10 +37,11 @@ function heartbeat_callback(response){
         $("#btn_refresh").click(function () { refresh(refresh_callback); });
 
         /* Get registration from local storage */
-        var registration = get_registration();
+        var registration = await get_registration();
+
 
         /* Check if the registration is already connected */
-        if (registration == null) {
+        if (registration == undefined || registration == null) {
             $("#btn_logout").hide();
             $("#btn_suggestions").hide();
             $("#btn_activity").hide();
@@ -102,7 +102,7 @@ function updateDescription() {
 /* Function to get all registrations and
     and populate a global dictionary */
 function all_study_groups_callback(response) {
-    if (!validate_response(response, "Cannot get study groups")) {
+    if (!validate_response(response)) {
         return;
     }
 
@@ -121,7 +121,7 @@ function all_study_groups_callback(response) {
 
 /* Create a new registration callback. */
 function register_callback(response) {
-    if (!validate_response(response, "Cannot create registration")) {
+    if (!validate_response(response)) {
         return;
     }
     display_message("Created registration.");
@@ -130,7 +130,7 @@ function register_callback(response) {
 
 /* Connect registration */
 function connect_login_callback(response) {
-    if (!validate_response(response, "Cannot connect using the provided registration")) {
+    if (!validate_response(response)) {
         return;
     }
     save_registration(response.data);
@@ -138,8 +138,8 @@ function connect_login_callback(response) {
 }
 
 /* Logout call */
-function logout_callback(response) {
-    clear_registration();
+async function logout_callback(response) {
+    LS.removeItems([REGISTRATION_DATA]);
     location.reload();
 }
 
@@ -311,8 +311,8 @@ function display_suggested_resources(data){
 }
 
 function computed_results_callback(response) {
-    
-    if (!validate_response(response, "Cannot get last searches")) {
+    if (!validate_response(response)) {
+        $("#td_lastsearch_call").text("Cannot get last searches. Try searching something in Google.");
         return;
     }
 
@@ -406,7 +406,7 @@ function computed_results_callback(response) {
 
 /* Connected functionality: Once the registration is connected,
     display results related to the registration. */
-function connected() {
+async function connected() {
     toggle_tabs("#div_suggestions");
     $("#btn_logout").show();
     $("#btn_suggestions").show();
@@ -415,7 +415,7 @@ function connected() {
     $("#btn_notifications").show();
     $("#btn_registration").hide();
 
-    $("#i_connectedas").text(get_registration().registration_code);
+    $("#i_connectedas").text((await get_registration()).registration_code);
 
     defaults("Loading...", true);
 
@@ -500,5 +500,5 @@ function get_star_image(percentage) {
 }
 
 window.addEventListener('beforeunload', function() {
-    localStorage.setItem(PAUSE, "true");
+    LS.setItem(PAUSE, "true");
 }, false)
