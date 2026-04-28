@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Popup Mobile Preview</title>
+  <style>
+    :root {
+      --bg-1: #0f172a;
+      --bg-2: #1e293b;
+      --accent: #22c55e;
+      --shell: #111827;
+      --screen: #f8fafc;
+      --shadow: rgba(2, 6, 23, 0.45);
+      --text: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, #334155 0%, transparent 35%),
+        radial-gradient(circle at 90% 90%, #14532d 0%, transparent 30%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      padding: 24px;
+    }
+
+    .wrapper {
+      width: min(100%, 520px);
+      display: grid;
+      gap: 14px;
+      justify-items: center;
+      max-height: 100dvh;
+    }
+
+    .label {
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      opacity: 0.92;
+      text-align: center;
+    }
+
+    .phone {
+      width: min(92vw, 620px);
+      height: min(72dvh, 800px);
+      border-radius: 42px;
+      padding: 14px;
+      background:
+        linear-gradient(150deg, #374151, #111827 45%, #030712);
+      box-shadow:
+        0 26px 60px var(--shadow),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 30px;
+      overflow: hidden;
+      background: var(--screen);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #fff;
+    }
+
+    .hint {
+      font-size: 13px;
+      opacity: 0.8;
+      text-align: center;
+      max-width: 48ch;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 450px) {
+      body {
+        padding: 10px;
+      }
+
+      .phone {
+        width: min(96vw, 585px);
+        height: min(76dvh, 780px);
+        border-radius: 30px;
+      }
+
+      .screen {
+        border-radius: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrapper">
+    <div class="label">Study Phrase Advisor - Mobile Style Popup Preview</div>
+
+    <section class="phone" aria-label="Mobile device preview frame">
+      <div class="screen">
+        <iframe src="popup.html" title="Study Phrase Advisor Popup"></iframe>
+      </div>
+    </section>
+
+    <p class="hint">
+      If the popup does not update, reload
+      <a href="popup.html" target="_blank" rel="noopener">popup.html</a>
+      and this page.
+    </p>
+  </main>
+</body>
+</html>

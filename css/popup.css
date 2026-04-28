@@ -21,8 +21,8 @@ body, html {
 
 /* Style tab links */
 .notification {
-  background-color:yellow;
-  color: red;
+  background-color: #555;
+  color: white;
   float: left;
   border: none;
   outline: none;

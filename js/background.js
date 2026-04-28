@@ -82,6 +82,10 @@ chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
 
   console.log(json);
 
+  if (USE_MOCK_DATA) {
+    return;
+  }
+
   // Send request to the server
   fetch(API_URL + "user/visited_url.php", {
     method: "POST",
